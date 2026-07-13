@@ -6,25 +6,30 @@ import { useEffect, useRef } from "react";
 export default function Home() {
   const mountRef = useRef<HTMLDivElement>(null);
 
-  // Three.js setup running after the page renders
+  // Three.js setup that runs after the page renders to prevent window from being undefined
   useEffect(() => {
     if (!mountRef.current) {
       return;
     }
 
+    // create a scene
     const scene = new THREE.Scene();
+
+    // create a camera
     const camera = new THREE.PerspectiveCamera(
       75,
       window.innerWidth / window.innerHeight,
       0.1,
       1000,
     );
+
+    // create a renderer
     const renderer = new THREE.WebGLRenderer();
 
     renderer.setSize(window.innerWidth, window.innerHeight);
     mountRef.current.appendChild(renderer.domElement);
 
-    // create a red cube
+    // create a red cube to display to scene
     const geometry = new THREE.BoxGeometry(2, 2, 2);
     const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
     const cube = new THREE.Mesh(geometry, material);
@@ -33,10 +38,12 @@ export default function Home() {
     // move the camera back
     camera.position.z = 5;
 
+    // render the scene
     const animate = (time: number) => {
       renderer.render(scene, camera);
       requestAnimationFrame(animate);
 
+      // rotate the cube
       cube.rotation.x = time / 10000;
       cube.rotation.y = time / 2000;
     };
