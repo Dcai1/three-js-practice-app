@@ -46,11 +46,8 @@ export default function TestPage() {
   }, []);
 
   return (
-    <main className="">
-      <div
-        ref={containerRef}
-        className="flex flex-col justify-between w-full min-h-screen text-center glass"
-      >
+    <main ref={containerRef}>
+      <div className="flex flex-col justify-between w-full min-h-screen text-center glass">
         <h1 className="pt-2 text-3xl">A Placeholder Title</h1>
         <h3 className="mb-4 text-lg">A Placeholder Caption</h3>
       </div>
