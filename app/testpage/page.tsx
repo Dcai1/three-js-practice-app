@@ -1,3 +1,4 @@
+"use client";
 import * as THREE from "three";
 import { useEffect, useRef } from "react";
 
@@ -25,6 +26,8 @@ export default function TestPage() {
     const cube = new THREE.Mesh(geometry, material);
     scene.add(cube);
 
+    camera.position.z = 5;
+
     const animate = (time: number) => {
       renderer.render(scene, camera);
       requestAnimationFrame(animate);
@@ -34,13 +37,22 @@ export default function TestPage() {
       cube.rotation.y = time / 2000;
     };
 
-    animate(0);
+    animate(1);
+
+    return () => {
+      renderer.dispose();
+      containerRef.current?.removeChild(renderer.domElement);
+    };
   }, []);
 
   return (
-    <main>
-      <div className="flex flex-col w-full min-h-screen glass">
-        <h1 className="text-3xl">A Placeholder Title</h1>
+    <main className="">
+      <div
+        ref={containerRef}
+        className="flex flex-col justify-between w-full min-h-screen text-center glass"
+      >
+        <h1 className="pt-2 text-3xl">A Placeholder Title</h1>
+        <h3 className="mb-4 text-lg">A Placeholder Caption</h3>
       </div>
     </main>
   );
